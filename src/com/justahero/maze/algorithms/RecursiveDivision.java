@@ -10,6 +10,6 @@ public class RecursiveDivision {
     }
 
     public void generate() {
-        
+        board.reset();
     }
 }
