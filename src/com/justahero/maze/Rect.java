@@ -7,10 +7,7 @@ public class Rect {
     public int h = 0;
 
     public Rect(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.w = width;
-        this.h = height;
+        set(x, y, width, height);
     }
 
     public Rect() {
@@ -38,7 +35,22 @@ public class Rect {
         return x + w;
     }
 
+    public int width() {
+        return w;
+    }
+
+    public int height() {
+        return h;
+    }
+
     public int bottom() {
         return y + h;
+    }
+
+    public void set(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.w = width;
+        this.h = height;
     }
 }

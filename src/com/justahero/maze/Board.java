@@ -15,7 +15,7 @@ public class Board {
     private static Cell[][] createCells(int width, int height) {
         Cell[][] cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
-            for (int y = 0; y < cells.length; y++) {
+            for (int y = 0; y < cells[x].length; y++) {
                 cells[x][y] = new Cell();
             }
         }
@@ -32,8 +32,5 @@ public class Board {
 
     public Cell cell(int x, int y) {
         return cells[x][y];
-    }
-
-    public void reset() {
     }
 }

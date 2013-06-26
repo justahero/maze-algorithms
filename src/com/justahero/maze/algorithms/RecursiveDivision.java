@@ -1,7 +1,6 @@
 package com.justahero.maze.algorithms;
 
 import com.justahero.maze.Board;
-import com.justahero.maze.Cell;
 import com.justahero.maze.Cell.Direction;
 import com.justahero.maze.Rect;
 
@@ -14,9 +13,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 
     public void generate() {
         resetBoard();
-        int w = board.width();
-        int h = board.height();
-        divide(0, 0, w, h, chooseOrientation(w, h));
+        divide(new Rect(0, 0, board.width(), board.height()));
     }
 
     private void resetBoard() {
@@ -36,52 +33,59 @@ public class RecursiveDivision extends MazeAlgorithm {
         }
     }
 
-    private void divide(int x, int y, int width, int height, Cell.Direction dir) {
+    private void divide(Rect rect) {
+        int width = rect.width();
+        int height = rect.height();
         if (width < 2 || height < 2) {
             return;
         }
 
         fireUpdate();
 
-        int wx = x + (dir.isHorizontal() ? 0 : rand(width - 2));
-        int wy = y + (dir.isHorizontal() ? rand(height - 2) : 0);
-
-        int px = wx + (dir.isHorizontal() ? rand(width) : 0);
-        int py = wy + (dir.isHorizontal() ? 0 : rand(height));
-
-        int dx = dir.isHorizontal() ? 1 : 0;
-        int dy = dir.isHorizontal() ? 0 : 1;
-
-        int length = dir.isHorizontal() ? width : height;
-
-        for (int i = 0; i < length; i++) {
-            if (wx != px || wy != py) {
-                board.cell(wx, wy).setWall(dir);
+        if (width > height) {
+            divideVertical(rect);
+        } else if (height > width) {
+            divideHorizontal(rect);
+        } else {
+            boolean vertical = (rand(2) == 1);
+            if (vertical) {
+                divideVertical(rect);
+            } else {
+                divideHorizontal(rect);
             }
-            wx += dx;
-            wy += dy;
         }
 
-        int nx = x;
-        int ny = y;
-        int w = dir.isHorizontal() ? width : wx - x + 1;
-        int h = dir.isHorizontal() ? wy - y + 1 : height;
-        divide(nx, ny, w, h, chooseOrientation(w, h));
-
-        nx = dir.isHorizontal() ? x : wx + 1;
-        ny = dir.isHorizontal() ? wy + 1 : y;
-        w = dir.isHorizontal() ? width : x + width - wx - 1;
-        h = dir.isHorizontal() ? y + height - wy - 1 : height;
-        divide(nx, ny, w, h, chooseOrientation(w, h));
+        fireUpdate();
     }
 
-    private Direction chooseOrientation(int width, int height) {
-        if (width < height) {
-            return Direction.East;
-        } else if (height < width) {
-            return Direction.North;
+    private void divideHorizontal(Rect rect) {
+        int divide = rect.top() + 1 + rand(rect.height() - 2);
+        for (int x = rect.left(); x < rect.right() + 1; x++) {
+            board.cell(x, divide).setWall(Direction.North);
         }
-        return (rand(2) == 0) ? Direction.East : Direction.North;
+
+        int clearSpace = rect.left() + rand(rect.width() - 1);
+        board.cell(clearSpace, divide).removeWall(Direction.North);
+
+        Rect top = new Rect(rect.left(), rect.top(), rect.width(), divide);
+        Rect bottom = new Rect(rect.left(), divide, rect.width(), rect.height() - divide);
+        divide(top);
+        divide(bottom);
+    }
+
+    private void divideVertical(Rect rect) {
+        int divide = rect.left() + 1 + rand(rect.width() - 2);
+        for (int y = rect.top(); y < rect.bottom(); y++) {
+            board.cell(divide, y).setWall(Direction.East);
+        }
+
+        int clearSpace = rect.top() + rand(rect.height() - 1);
+        board.cell(divide, clearSpace).removeWall(Direction.East);
+
+        Rect left  = new Rect(rect.left(), rect.top(), divide, rect.height());
+        Rect right = new Rect(divide, rect.top(), rect.width() - divide, rect.height());
+        divide(left);
+        divide(right);
     }
 }
 
