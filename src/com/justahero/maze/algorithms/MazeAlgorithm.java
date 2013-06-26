@@ -2,9 +2,11 @@ package com.justahero.maze.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MazeAlgorithm {
     private final List<MazeListener> listeners = new ArrayList<MazeListener>();
+    private static final Random random = new Random();
 
     public void addMazeListener(MazeListener listener) {
         listeners.add(listener);
@@ -15,7 +17,7 @@ public class MazeAlgorithm {
     }
 
     public static int rand(int range) {
-        return (int)(Math.random() * range);
+        return random.nextInt(range);
     }
 
     public void fireUpdate() {

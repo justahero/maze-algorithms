@@ -35,16 +35,16 @@ public class Rect {
         return x + w;
     }
 
+    public int bottom() {
+        return y + h;
+    }
+
     public int width() {
         return w;
     }
 
     public int height() {
         return h;
-    }
-
-    public int bottom() {
-        return y + h;
     }
 
     public void set(int x, int y, int width, int height) {

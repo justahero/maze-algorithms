@@ -13,7 +13,8 @@ public class RecursiveDivision extends MazeAlgorithm {
 
     public void generate() {
         resetBoard();
-        divide(new Rect(0, 0, board.width(), board.height()));
+        divide(new Rect(0, 0, board.width(), board.height()), 0);
+        fireUpdate();
     }
 
     private void resetBoard() {
@@ -33,7 +34,7 @@ public class RecursiveDivision extends MazeAlgorithm {
         }
     }
 
-    private void divide(Rect rect) {
+    private void divide(Rect rect, int level) {
         int width = rect.width();
         int height = rect.height();
         if (width < 2 || height < 2) {
@@ -42,50 +43,51 @@ public class RecursiveDivision extends MazeAlgorithm {
 
         fireUpdate();
 
+        if (level >= 12) {
+//            return;
+        }
+
+        level++;
         if (width > height) {
-            divideVertical(rect);
+            divideVertical(rect, level);
         } else if (height > width) {
-            divideHorizontal(rect);
+            divideHorizontal(rect, level);
         } else {
-            boolean vertical = (rand(2) == 1);
-            if (vertical) {
-                divideVertical(rect);
+            boolean horizontal = rand(2) == 0;
+            if (horizontal) {
+                divideHorizontal(rect, level);
             } else {
-                divideHorizontal(rect);
+                divideVertical(rect, level);
+            }
+        }
+    }
+
+    private void divideHorizontal(Rect rect, int level) {
+        //int h = rect.h / 2 + rand(rect.h / 2);
+        int h = rand(rect.h - 1) + 1;
+        int p = rand(rect.w);
+        for (int x = rect.left(); x < rect.right(); x++) {
+            if (x != rect.x + p) {
+                board.cell(x, rect.top() + h).setWall(Direction.North);
             }
         }
 
-        fireUpdate();
+        divide(new Rect(rect.x, rect.y,     rect.w, h), level);
+        divide(new Rect(rect.x, rect.y + h, rect.w, rect.h - h), level);
     }
 
-    private void divideHorizontal(Rect rect) {
-        int divide = rect.top() + 1 + rand(rect.height() - 2);
-        for (int x = rect.left(); x < rect.right() + 1; x++) {
-            board.cell(x, divide).setWall(Direction.North);
-        }
-
-        int clearSpace = rect.left() + rand(rect.width() - 1);
-        board.cell(clearSpace, divide).removeWall(Direction.North);
-
-        Rect top = new Rect(rect.left(), rect.top(), rect.width(), divide);
-        Rect bottom = new Rect(rect.left(), divide, rect.width(), rect.height() - divide);
-        divide(top);
-        divide(bottom);
-    }
-
-    private void divideVertical(Rect rect) {
-        int divide = rect.left() + 1 + rand(rect.width() - 2);
+    private void divideVertical(Rect rect,int level) {
+        //int w = rect.w / 2 + rand(rect.w / 2);
+        int w = rand(rect.w - 1) + 1;
+        int p = rand(rect.h);
         for (int y = rect.top(); y < rect.bottom(); y++) {
-            board.cell(divide, y).setWall(Direction.East);
+            if (y != rect.y + p) {
+                board.cell(rect.left() + w, y).setWall(Direction.West);
+            }
         }
 
-        int clearSpace = rect.top() + rand(rect.height() - 1);
-        board.cell(divide, clearSpace).removeWall(Direction.East);
-
-        Rect left  = new Rect(rect.left(), rect.top(), divide, rect.height());
-        Rect right = new Rect(divide, rect.top(), rect.width() - divide, rect.height());
-        divide(left);
-        divide(right);
+        divide(new Rect(rect.x,     rect.y, w         , rect.h), level);
+        divide(new Rect(rect.x + w, rect.y, rect.w - w, rect.h), level);
     }
 }
 
