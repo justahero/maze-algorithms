@@ -13,7 +13,7 @@ public class RecursiveDivision extends MazeAlgorithm {
 
     public void generate() {
         resetBoard();
-        divide(new Rect(0, 0, board.width(), board.height()), 0);
+        divide(new Rect(0, 0, board.width(), board.height()));
         fireUpdate();
     }
 
@@ -34,7 +34,7 @@ public class RecursiveDivision extends MazeAlgorithm {
         }
     }
 
-    private void divide(Rect rect, int level) {
+    private void divide(Rect rect) {
         int width = rect.width();
         int height = rect.height();
         if (width < 2 || height < 2) {
@@ -43,26 +43,21 @@ public class RecursiveDivision extends MazeAlgorithm {
 
         fireUpdate();
 
-        if (level >= 12) {
-//            return;
-        }
-
-        level++;
         if (width > height) {
-            divideVertical(rect, level);
+            divideVertical(rect);
         } else if (height > width) {
-            divideHorizontal(rect, level);
+            divideHorizontal(rect);
         } else {
             boolean horizontal = rand(2) == 0;
             if (horizontal) {
-                divideHorizontal(rect, level);
+                divideHorizontal(rect);
             } else {
-                divideVertical(rect, level);
+                divideVertical(rect);
             }
         }
     }
 
-    private void divideHorizontal(Rect rect, int level) {
+    private void divideHorizontal(Rect rect) {
         //int h = rect.h / 2 + rand(rect.h / 2);
         int h = rand(rect.h - 1) + 1;
         int p = rand(rect.w);
@@ -72,11 +67,11 @@ public class RecursiveDivision extends MazeAlgorithm {
             }
         }
 
-        divide(new Rect(rect.x, rect.y,     rect.w, h), level);
-        divide(new Rect(rect.x, rect.y + h, rect.w, rect.h - h), level);
+        divide(new Rect(rect.x, rect.y,     rect.w, h));
+        divide(new Rect(rect.x, rect.y + h, rect.w, rect.h - h));
     }
 
-    private void divideVertical(Rect rect,int level) {
+    private void divideVertical(Rect rect) {
         //int w = rect.w / 2 + rand(rect.w / 2);
         int w = rand(rect.w - 1) + 1;
         int p = rand(rect.h);
@@ -86,8 +81,8 @@ public class RecursiveDivision extends MazeAlgorithm {
             }
         }
 
-        divide(new Rect(rect.x,     rect.y, w         , rect.h), level);
-        divide(new Rect(rect.x + w, rect.y, rect.w - w, rect.h), level);
+        divide(new Rect(rect.x,     rect.y, w         , rect.h));
+        divide(new Rect(rect.x + w, rect.y, rect.w - w, rect.h));
     }
 }
 
