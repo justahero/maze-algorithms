@@ -5,12 +5,11 @@ import com.justahero.maze.Cell.Direction;
 import com.justahero.maze.Rect;
 
 public class RecursiveDivision extends MazeAlgorithm {
-    private final Board board;
-
     public RecursiveDivision(Board board) {
-        this.board = board;
+        super(board);
     }
 
+    @Override
     public void generate() {
         resetBoard();
         divide(new Rect(0, 0, board.width(), board.height()));
@@ -58,7 +57,6 @@ public class RecursiveDivision extends MazeAlgorithm {
     }
 
     private void divideHorizontal(Rect rect) {
-        //int h = rect.h / 2 + rand(rect.h / 2);
         int h = rand(rect.h - 1) + 1;
         int p = rand(rect.w);
         for (int x = rect.left(); x < rect.right(); x++) {
@@ -72,7 +70,6 @@ public class RecursiveDivision extends MazeAlgorithm {
     }
 
     private void divideVertical(Rect rect) {
-        //int w = rect.w / 2 + rand(rect.w / 2);
         int w = rand(rect.w - 1) + 1;
         int p = rand(rect.h);
         for (int y = rect.top(); y < rect.bottom(); y++) {
