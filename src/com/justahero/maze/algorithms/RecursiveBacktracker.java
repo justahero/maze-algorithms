@@ -9,5 +9,7 @@ public class RecursiveBacktracker extends MazeAlgorithm {
 
     @Override
     public void generate() {
+        resetBoard();
+        fireUpdate();
     }
 }
