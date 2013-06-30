@@ -1,7 +1,6 @@
 package com.justahero.maze;
 
-import com.justahero.maze.algorithms.Kruskal;
-import com.justahero.maze.algorithms.MazeAlgorithm;
+import com.justahero.maze.algorithms.*;
 
 public class Maze {
     public static void main(String[] args) {
