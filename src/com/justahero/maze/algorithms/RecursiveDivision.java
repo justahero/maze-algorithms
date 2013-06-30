@@ -16,23 +16,6 @@ public class RecursiveDivision extends MazeAlgorithm {
         fireUpdate();
     }
 
-    private void resetBoard() {
-        for (int y = 0; y < board.height(); y++) {
-            for (int x = 0; x < board.width(); x++) {
-                board.cell(x, y).clearWalls();
-            }
-        }
-        Rect rect = new Rect(0, 0, board.width() - 1, board.height() - 1);
-        for (int x = 0; x < board.width(); x++) {
-            board.cell(x, rect.top()).setWall(Direction.North);
-            board.cell(x, rect.bottom()).setWall(Direction.South);
-        }
-        for (int y = 0; y < board.height(); y++) {
-            board.cell(rect.left(), y).setWall(Direction.West);
-            board.cell(rect.right(), y).setWall(Direction.East);
-        }
-    }
-
     private void divide(Rect rect) {
         int width = rect.width();
         int height = rect.height();
