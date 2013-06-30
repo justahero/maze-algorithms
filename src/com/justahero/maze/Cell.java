@@ -1,6 +1,5 @@
 package com.justahero.maze;
 
-
 public class Cell {
     public enum Direction {
         North(0), East(1), South(2), West(3);
@@ -45,10 +44,23 @@ public class Cell {
 
     private final boolean walls[] = new boolean[4];
     private final Cell[] neighbors = new Cell[4];
+
+    private final int x;
+    private final int y;
     private boolean visited = false;
 
-    public Cell() {
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
         clearWalls();
+    }
+
+    public int x() {
+        return x;
+    }
+
+    public int y() {
+        return y;
     }
 
     public void setNeighbor(Direction dir, Cell cell) {
