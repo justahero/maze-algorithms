@@ -31,7 +31,7 @@ public class Board {
         Cell[][] cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < cells[x].length; y++) {
-                cells[x][y] = new Cell();
+                cells[x][y] = new Cell(x, y);
             }
         }
         return cells;

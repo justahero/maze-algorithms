@@ -59,4 +59,12 @@ public abstract class MazeAlgorithm {
             board.cell(rect.right(), y).setWall(Direction.East);
         }
     }
+
+    protected void initBoard() {
+        for (int x = 0; x < board.width(); x++) {
+            for (int y = 0; y < board.height(); y++) {
+                board.cell(x, y).setWalls();
+            }
+        }
+    }
 }
