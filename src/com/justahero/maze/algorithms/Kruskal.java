@@ -25,10 +25,12 @@ public class Kruskal extends MazeAlgorithm {
     }
 
     class Edge {
-        public final Cell cell;
+        public final int x;
+        public final int y;
         public final Direction dir;
-        public Edge(Cell cell, Direction dir) {
-            this.cell = cell;
+        public Edge(int x, int y, Direction dir) {
+            this.x = x;
+            this.y = y;
             this.dir = dir;
         }
     }
@@ -66,7 +68,7 @@ public class Kruskal extends MazeAlgorithm {
             Edge edge = edges.remove(0);
 
             Direction dir = edge.dir;
-            Cell cell = edge.cell;
+            Cell cell = board.cell(edge.x, edge.y);
             Cell neighbor = cell.neighbor(edge.dir);
 
             Node set1 = sets[cell.x()][cell.y()];
@@ -86,10 +88,14 @@ public class Kruskal extends MazeAlgorithm {
 
     private List<Edge> buildEdges() {
         List<Edge> edges = new LinkedList<Kruskal.Edge>();
-        for (int x = 1; x < board.width(); x++) {
-            for (int y = 1; y < board.height(); y++) {
-                edges.add(new Edge(board.cell(x, y), Direction.West));
-                edges.add(new Edge(board.cell(x, y), Direction.North));
+        for (int x = 0; x < board.width(); x++) {
+            for (int y = 0; y < board.height(); y++) {
+                if (x > 0) {
+                    edges.add(new Edge(x, y, Direction.West));
+                }
+                if (y > 0) {
+                    edges.add(new Edge(x, y, Direction.North));
+                }
             }
         }
         return edges;
