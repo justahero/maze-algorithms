@@ -20,6 +20,7 @@ public class RecursiveDivision extends MazeAlgorithm {
         int width = rect.width();
         int height = rect.height();
         if (width < 2 || height < 2) {
+            markVisited(rect);
             return;
         }
 
@@ -35,6 +36,14 @@ public class RecursiveDivision extends MazeAlgorithm {
                 divideHorizontal(rect);
             } else {
                 divideVertical(rect);
+            }
+        }
+    }
+
+    private void markVisited(Rect rect) {
+        for (int x = rect.x; x < rect.right(); x++) {
+            for (int y = rect.y; y < rect.bottom(); y++) {
+                board.cell(x, y).visit();
             }
         }
     }
