@@ -23,14 +23,6 @@ public class RecursiveBacktracker extends MazeAlgorithm {
         fireUpdate();
     }
 
-    private void initBoard() {
-        for (int x = 0; x < board.width(); x++) {
-            for (int y = 0; y < board.height(); y++) {
-                board.cell(x, y).setWalls();
-            }
-        }
-    }
-
     private void findPassage(int x, int y) {
         board.cell(x, y).visit();
         List<Direction> directions = asList(Direction.North, Direction.East, Direction.South, Direction.West);
