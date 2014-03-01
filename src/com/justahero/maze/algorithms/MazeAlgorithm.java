@@ -34,16 +34,16 @@ public abstract class MazeAlgorithm {
         for (MazeListener listener : listeners) {
             listener.onUpdate();
         }
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public abstract void generate();
 
-    protected void resetBoard() {
+    public void resetBoard() {
         for (int y = 0; y < board.height(); y++) {
             for (int x = 0; x < board.width(); x++) {
                 board.cell(x, y).clearWalls();

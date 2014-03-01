@@ -88,6 +88,10 @@ public class Cell {
         return walls[dir.value()];
     }
 
+    public boolean canGoTo(Direction dir) {
+        return !walls[dir.value()];
+    }
+
     public void setWall(Direction dir) {
         walls[dir.value()] = true;
     }
@@ -102,6 +106,10 @@ public class Cell {
 
     public void setWalls() {
         setWalls(true);
+    }
+
+    public String toString() {
+        return "x: " + x + ", y " + y;
     }
 
     private void setWalls(boolean enable) {

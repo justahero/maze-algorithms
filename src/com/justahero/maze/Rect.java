@@ -12,12 +12,7 @@ public class Rect {
 
     public Rect() {
     }
-
-    public void setPos(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
+    
     public void setSize(int width, int height) {
         this.w = width;
         this.h = height;
@@ -52,5 +47,10 @@ public class Rect {
         this.y = y;
         this.w = width;
         this.h = height;
+    }
+
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }

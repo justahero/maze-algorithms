@@ -3,10 +3,10 @@ package com.justahero.maze;
 import com.justahero.maze.Cell.Direction;
 
 public class Board {
-    private final int width;
-    private final int height;
+    protected final int width;
+    protected final int height;
 
-    private final Cell[][] cells;
+    protected final Cell[][] cells;
 
     public Board(int width, int height) {
         this.width  = width;
@@ -24,7 +24,10 @@ public class Board {
     }
 
     public Cell cell(int x, int y) {
-        return cells[x][y];
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            return cells[x][y];
+        }
+        return null;
     }
 
     private static Cell[][] createCells(int width, int height) {
